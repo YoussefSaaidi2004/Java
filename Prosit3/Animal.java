@@ -1,30 +1,63 @@
-public class Animal {
-    private String name;
-    private String type;
+package tn.esprit.gestionzoo.entities;
 
-    public Animal(String name, String type) {
-        this.name = name;
-        this.type = type;
+public class Animal {
+    // 🔒 Attributs privés
+    private String family;
+    private String name;
+    private int age;
+    private boolean isMammal;
+
+    // 🧱 Constructeur
+    public Animal(String family, String name, int age, boolean isMammal) {
+        setFamily(family);
+        setName(name);
+        setAge(age);
+        this.isMammal = isMammal;
+    }
+
+    // ⚙️ Getters et Setters avec validation
+    public String getFamily() {
+        return family;
+    }
+
+    public void setFamily(String family) {
+        this.family = family;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getType() {
-        return type;
+    public void setName(String name) {
+        if (name == null || name.trim().isEmpty()) {
+            System.out.println("⚠️ Le nom de l’animal ne peut pas être vide.");
+        } else {
+            this.name = name;
+        }
     }
 
-    @Override
-    public String toString() {
-        return "Animal{name='" + name + "', type='" + type + "'}";
+    public int getAge() {
+        return age;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        Animal other = (Animal) obj;
-        return name.equalsIgnoreCase(other.name) && type.equalsIgnoreCase(other.type);
+    public void setAge(int age) {
+        if (age < 0) {
+            System.out.println("⚠️ L’âge d’un animal ne peut pas être négatif.");
+        } else {
+            this.age = age;
+        }
+    }
+
+    public boolean isMammal() {
+        return isMammal;
+    }
+
+    public void setMammal(boolean isMammal) {
+        this.isMammal = isMammal;
+    }
+
+    // 🧾 Méthode d’affichage
+    public void displayAnimal() {
+        System.out.println("Famille : " + family + ", Nom : " + name + ", Âge : " + age + ", Mammifère : " + isMammal);
     }
 }
