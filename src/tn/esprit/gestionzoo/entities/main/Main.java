@@ -20,6 +20,8 @@ public class Main {
         Aquatique poisson = new Aquatique("Test" , "Test",1,true,"mer");
         Dolphin dauphin = new Dolphin("test1","test1",1,true,"mer",100);
         Penguin pen = new Penguin("test2","test2",2,true,2,150);
+        Aquatique requin = new Aquatique("Poisson", "Bruce", 8, false, "Mer");
+        Aquatique tortue = new Aquatique("Reptile", "Donatello", 50, false, "Lagon");
 
 
 
