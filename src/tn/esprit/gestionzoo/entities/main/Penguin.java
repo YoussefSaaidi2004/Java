@@ -1,16 +1,22 @@
 package tn.esprit.gestionzoo.entities;
 
-public class Penguin extends Terrestre {
-    private int swimmingDepth;
-    public Penguin(String family, String name, int age, boolean isMammal, int nbrLegs, int swimmingDepth) {
-        super(family, name, age, isMammal, nbrLegs);
+public class Penguin extends Aquatique {
+    private int wings;          // ex : nombre d’ailes (ou autres attributs)
+    private float swimmingDepth;
+
+    public Penguin(String family, String name, int age, boolean isMammal, int wings, float swimmingDepth)
+            throws InvalidAgeException {
+        super(family, name, age, isMammal, "océan");  // ou "continent" selon ton modèle
+        this.wings = wings;
         this.swimmingDepth = swimmingDepth;
     }
-    public int getSwimmingDepth() {
+
+    public float getSwimmingDepth() {
         return swimmingDepth;
     }
-    public void setSwimmingDepth(int swimmingDepth) {this.swimmingDepth = swimmingDepth;}
-    public String toString() {
-        return super.toString() + ", Profondeur de nage : " + swimmingDepth;
+
+    @Override
+    public void swim() {
+        System.out.println(getName() + " nage à une profondeur de " + swimmingDepth + " mètres.");
     }
 }
