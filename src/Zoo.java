@@ -7,8 +7,8 @@ public class Zoo {
     private String city;
     private Animal[] animals;
     private int nbrAnimals;
-    private static final int NB_MAX_ANIMALS = 25;
-    private Aquatique[] aquats;
+    private static final int NB_MAX_ANIMALS = 3;
+    private Aquatique[] aquatic;
 
 
     //  Constructeur
@@ -17,7 +17,7 @@ public class Zoo {
         this.city = city;
         this.animals = new Animal[NB_MAX_ANIMALS];
         this.nbrAnimals = 0;
-        this.aquats = new Aquatique[NB_MAX_ANIMALS];
+        this.aquatic = new Aquatique[NB_MAX_ANIMALS];
     }
 
     public String getName() {
@@ -50,20 +50,23 @@ public class Zoo {
     }
 
     //  Méthode addAnimal() (Instruction 17)
-    public boolean addAnimal(Animal a) {
+    public void addAnimal(Animal a) throws ZooFullException {
         if (a == null) {
-            System.out.println(" Animal invalide !");
-            return false;
+            System.out.println("Animal invalide !");
+            return;
         }
-        if (isZooFull()) {
-            System.out.println(" Le zoo est plein, impossible d’ajouter : " + a.getName());
-            return false;
+
+        // Vérifie si le zoo est plein
+        if (nbrAnimals >= animals.length) {
+            throw new ZooFullException("Le zoo est plein ! Impossible d’ajouter : " + a.getName());
         }
+
         animals[nbrAnimals] = a;
         nbrAnimals++;
-        System.out.println(" Animal ajouté : " + a.getName());
-        return true;
+        System.out.println("Animal ajouté : " + a.getName());
+        System.out.println("Nombre d’animaux dans le zoo : " + nbrAnimals);
     }
+
 
     //  Méthode d’affichage
     public void displayZoo() {
@@ -74,14 +77,14 @@ public class Zoo {
         }
     }
 
-    public void addAquaticAnimal(Aquatic aquats) {
+    public void addAquaticAnimal(Aquatique aquats) {
         if (aquats == null) {
             System.out.println(" Animal aquatique invalide !");
             return;
         }
 
         // Vérifier s’il reste une place dans le tableau des aquatiques
-        for (int i = 0; i < aquats.length; i++) {
+        for (int i = 0; i < aquatic.length; i++) {
             if (aquatic[i] == null) {
                 aquatic[i] = aquats;
                 System.out.println(" Animal aquatique ajouté : " + aquats.getName());
@@ -89,14 +92,14 @@ public class Zoo {
             }
         }
 
-        System.out.println(" Le tableau des animaux aquatiques est plein, impossible d’ajouter : " + aquatic.getName());
+        System.out.println(" Le tableau des animaux aquatiques est plein, impossible d’ajouter : " + aquats.getName());
     }
     public float maxPenguinSwimmingDepth() {
         float maxDepth = 0.0f;
 
-        for (Aquatic aquatic : aquats) {
-            if (aquatic instanceof Penguin) {
-                Penguin p = (Penguin) aquatic;
+        for (Aquatique a : aquatic) { // ✅ corrected here
+            if (a instanceof Penguin) {
+                Penguin p = (Penguin) a;
                 if (p.getSwimmingDepth() > maxDepth) {
                     maxDepth = p.getSwimmingDepth();
                 }
@@ -105,15 +108,16 @@ public class Zoo {
 
         return maxDepth;
     }
+
     public void displayNumberOfAquaticsByType() {
         int countDolphins = 0;
         int countPenguins = 0;
 
-        for (Aquatique aquatic : aquats) {
-            if (aquatic != null) {
-                if (aquatique instanceof Dolphin) {
+        for (Aquatique a : aquatic) {
+            if (a != null) {
+                if (a instanceof Dolphin) {
                     countDolphins++;
-                } else if (aquatique instanceof Penguin) {
+                } else if (a instanceof Penguin) {
                     countPenguins++;
                 }
             }
@@ -121,6 +125,13 @@ public class Zoo {
 
         System.out.println("Nombre de dauphins : " + countDolphins);
         System.out.println("Nombre de pingouins : " + countPenguins);
+    }
+    public void makeAquaticsSwim() {
+        for (Aquatique a : aquatic) {
+            if (a != null) {
+                a.swim();
+            }
+        }
     }
 
 }

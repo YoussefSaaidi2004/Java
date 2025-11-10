@@ -8,7 +8,10 @@ public class Animal {
     protected boolean isMammal;
 
     //  Constructeur
-    public Animal(String family, String name, int age, boolean isMammal) {
+    public Animal(String family, String name, int age, boolean isMammal) throws InvalidAgeException {
+        if (age < 0) {
+            throw new InvalidAgeException("L’âge d’un animal ne peut pas être négatif : " + age);
+        }
         setFamily(family);
         setName(name);
         setAge(age);
