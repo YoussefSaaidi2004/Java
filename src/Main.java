@@ -40,8 +40,8 @@ public class Main {
         societe.displayEmploye();
 
         // Test tri par Département puis Grade
-        System.out.println("\n=== Tri par Département puis par Grade ===");
-        societe.trierEmployeParNomDépartementEtGrade();
+        System.out.println("\n=== Tri par Departement puis par Grade ===");
+        societe.trierEmployeParNomDepartementEtGrade();
         societe.displayEmploye();
     }
 }
