@@ -1,10 +1,14 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SocieteArrayList implements IGestion<employe> {
 
     private ArrayList<employe> listeEmployes = new ArrayList<>();
+    // Affectations Employe -> Departement (clé = id employé pour éviter mutation clé)
+    private Map<Integer, Departement> affectations = new HashMap<>();
 
     // Ajouter un employé
     @Override
@@ -59,6 +63,39 @@ public class SocieteArrayList implements IGestion<employe> {
         Collections.sort(listeEmployes, Comparator
                 .comparing(employe::getDept_name)
                 .thenComparingInt(employe::getGrade));
+    }
+
+    // ================== Nouvelle fonctionnalité ==================
+    // Affecter un employé à un département (mise à jour du compteur du département)
+    public void affecterEmployeDepartement(employe e, Departement d) {
+        if (e == null || d == null) return;
+        Integer id = e.getId();
+        Departement ancien = affectations.get(id);
+        if (ancien != null) {
+            // décrémenter l'ancien département
+            ancien.setNbEmployes(Math.max(0, ancien.getNbEmployes() - 1));
+        }
+        affectations.put(id, d);
+        // mettre à jour le nom du département de l'employé
+        e.setDept_name(d.getNom());
+        // incrémenter le nouveau département
+        d.setNbEmployes(d.getNbEmployes() + 1);
+    }
+
+    // Afficher les employés et leur département associé
+    public void afficherEmployesEtDepartements() {
+        System.out.println("=== Employés et départements associés ===");
+        for (employe e : listeEmployes) {
+            Departement d = affectations.get(e.getId());
+            String dep = (d != null) ? d.getNom() : "Aucun";
+            System.out.println(e.getId() + " - " + e.getName() + " -> Département: " + dep);
+        }
+        System.out.println("=== Statistiques départements ===");
+        System.out.println("ID | Nom | Nb Employés");
+        // Pour éviter doublons lors de multiples affectations, utiliser un set des départements déjà vus
+        affectations.values().stream().distinct().forEach(dep ->
+                System.out.println(dep.getId() + " | " + dep.getNom() + " | " + dep.getNbEmployes())
+        );
     }
 }
 

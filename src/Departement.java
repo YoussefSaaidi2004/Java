@@ -18,6 +18,9 @@ public class Departement {
 
     public String getNom() { return nom; }
     public void setNom(String nom) { this.nom = nom; }
+    // Alias pour compatibilité avec ancien code (AffectationHashMap)
+    public String getDept_name() { return nom; }
+    public void setDept_name(String deptName) { this.nom = deptName; }
 
     public int getNbEmployes() { return nbEmployes; }
     public void setNbEmployes(int nbEmployes) { this.nbEmployes = nbEmployes; }

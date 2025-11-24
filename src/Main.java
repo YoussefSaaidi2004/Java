@@ -3,6 +3,10 @@ public class Main {
 
         // Création de l'objet de gestion
         SocieteArrayList societe = new SocieteArrayList();
+        // Création de départements
+        Departement depInf = new Departement(101, "Informatique", 0);
+        Departement depRh = new Departement(102, "RH", 0);
+        Departement depCompta = new Departement(103, "Comptabilite", 0);
 
         // Ajout des employés
         employe e1 = new employe(1, "Ali", "Ben Salah", "Informatique", 3);
@@ -43,5 +47,24 @@ public class Main {
         System.out.println("\n=== Tri par Departement puis par Grade ===");
         societe.trierEmployeParNomDepartementEtGrade();
         societe.displayEmploye();
+
+        // Affectations initiales employés -> départements
+        societe.affecterEmployeDepartement(e1, depInf);
+        societe.affecterEmployeDepartement(e2, depRh);
+        societe.affecterEmployeDepartement(e3, depInf);
+        societe.affecterEmployeDepartement(e4, depCompta);
+        societe.affecterEmployeDepartement(e5, depRh);
+
+        System.out.println("\n=== Employés et départements (après affectation) ===");
+        societe.afficherEmployesEtDepartements();
+
+        // Réaffectation du même employé e1 vers un autre département
+        System.out.println("\nRéaffectation de l'employé e1 (Ali) vers le département RH...");
+        societe.affecterEmployeDepartement(e1, depRh);
+
+        System.out.println("\n=== Employés et départements (après réaffectation) ===");
+        societe.afficherEmployesEtDepartements();
+
+        System.out.println("\nObservation: l'affectation d'un employé à un nouveau département met à jour le compteur du nouveau département et décrémente l'ancien. L'employé n'apparaît qu'une seule fois avec son dernier département.");
     }
 }
